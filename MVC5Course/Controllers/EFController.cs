@@ -47,14 +47,22 @@ namespace MVC5Course.Controllers
         [HttpPost]
         public ActionResult Edit(int id, Product product)
         {
-            var item = db.Product.Find(id);
-            item.ProductName = product.ProductName;
-            item.Price = product.Price;
-            item.Active = product.Active;
-            item.Stock = product.Stock;
-            db.SaveChanges();
 
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var item = db.Product.Find(id);
+                item.ProductName = product.ProductName;
+                item.Price = product.Price;
+                item.Active = product.Active;
+                item.Stock = product.Stock;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }else
+            {
+                return View(product);
+            }
         }
 
         public ActionResult Delete(int id)
@@ -96,9 +104,13 @@ namespace MVC5Course.Controllers
             //}
             return View(data);
         }
-
+        
         public void RemoveAll()
         {
+            //兩種刪除寫法
+            //db.Product.RemoveRange(db.Product);
+            //db.SaveChanges();
+
             db.Database.ExecuteSqlCommand("Delete from dbo.Product");
         }
     } 
