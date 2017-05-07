@@ -143,5 +143,26 @@ namespace MVC5Course.Controllers
 
             return View(data);
         }
+
+        public ActionResult CreateProducts()
+        {
+         
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateProducts(ProductListVM data)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("ListProducts");
+            }
+
+            return View();
+        }
+
+
     }
+
 }
+

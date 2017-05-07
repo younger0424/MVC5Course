@@ -6,6 +6,9 @@ using System.Web;
 
 namespace MVC5Course.Models.ViewModels
 {
+    /// <summary>
+    /// 用於精簡版的Product資料
+    /// </summary>
     public class ProductListVM
     {
         public int ProductId { get; set; }
