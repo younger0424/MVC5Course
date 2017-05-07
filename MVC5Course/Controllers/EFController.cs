@@ -77,23 +77,30 @@ namespace MVC5Course.Controllers
                 throw ex;
             }
             
-return RedirectToAction("Index");
+                return RedirectToAction("Index");
         }
 
         public ActionResult Details(int? id) //Medol Binding 模型繫結
         {
 
-            if (id == null)
-            {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Product.Find(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
+            var data = db.Database.SqlQuery<Product>("SELECT * FROM dbo.Product where ProductId = @p0", id).FirstOrDefault();
+
+            //if (id == null)
+            //{
+            //    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //Product product = db.Product.Find(id);
+            //if (product == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View(data);
         }
-    }
+
+        public void RemoveAll()
+        {
+            db.Database.ExecuteSqlCommand("Delete from dbo.Product");
+        }
+    } 
 
 }
