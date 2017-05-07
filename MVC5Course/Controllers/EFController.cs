@@ -1,6 +1,7 @@
 ﻿using MVC5Course.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,7 +17,7 @@ namespace MVC5Course.Controllers
         {
             var all = db.Product.AsQueryable();
             //var data = all.Where(p=> p.ClientId == 1);
-            var data = all.Where(p => p.Active == true && p.ProductName.Contains("Black"));
+            var data = all.Where(p => p.Is刪除 == false && p.Active == true && p.ProductName.Contains("Black"));
             return View(data);
         }
 
@@ -64,10 +65,19 @@ namespace MVC5Course.Controllers
             //{
             //    db.OrderLine.Remove(item1); 
             // }
-            db.OrderLine.RemoveRange(item.OrderLine);
-            db.Product.Remove(item);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            //db.OrderLine.RemoveRange(item.OrderLine);
+            //db.Product.Remove(item);
+            item.Is刪除 = true;
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
+            
+return RedirectToAction("Index");
         }
 
         public ActionResult Details(int? id) //Medol Binding 模型繫結

@@ -10,7 +10,9 @@ namespace MVC5Course.Models
     {
         public int 訂單數量
         {
-            get { return this.OrderLine.Count; }
+            get {
+                   return this.OrderLine.Count;
+                }
         }
     }
     
