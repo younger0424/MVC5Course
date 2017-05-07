@@ -8,6 +8,10 @@ namespace MVC5Course.Models
     [MetadataType(typeof(ProductMetaData))]
     public partial class Product
     {
+        public int 訂單數量
+        {
+            get { return this.OrderLine.Count; }
+        }
     }
     
     public partial class ProductMetaData
@@ -18,6 +22,10 @@ namespace MVC5Course.Models
        
         public int ProductId { get; set; }
 
+        //public int 訂單數量
+        //{
+        //    get { return this.OrderLine.Count; }
+        //}
         [Required]
         [StringLength(80, ErrorMessage="欄位長度不得大於 80 個字元")]
         [DisplayName("商品名稱")]

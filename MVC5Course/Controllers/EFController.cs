@@ -10,10 +10,10 @@ namespace MVC5Course.Controllers
     public class EFController : Controller
     {
         FabricsEntities db = new FabricsEntities();
- 
+
         // GET: EF
         public ActionResult Index()
-        {        
+        {
             var all = db.Product.AsQueryable();
             //var data = all.Where(p=> p.ClientId == 1);
             var data = all.Where(p => p.Active == true && p.ProductName.Contains("Black"));
@@ -26,7 +26,7 @@ namespace MVC5Course.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -47,9 +47,10 @@ namespace MVC5Course.Controllers
         public ActionResult Edit(int id, Product product)
         {
             var item = db.Product.Find(id);
-            item.ProductId = product.ProductId;
+            item.ProductName = product.ProductName;
             item.Price = product.Price;
-
+            item.Active = product.Active;
+            item.Stock = product.Stock;
             db.SaveChanges();
 
             return RedirectToAction("Index");
@@ -58,9 +59,30 @@ namespace MVC5Course.Controllers
         public ActionResult Delete(int id)
         {
             var item = db.Product.Find(id);
+            //orderLine 的兩種寫法
+            //foreach (var item1 in item.OrderLine.ToList())
+            //{
+            //    db.OrderLine.Remove(item1); 
+            // }
+            db.OrderLine.RemoveRange(item.OrderLine);
             db.Product.Remove(item);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Details(int? id) //Medol Binding 模型繫結
+        {
+
+            if (id == null)
+            {
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = db.Product.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
         }
     }
 
