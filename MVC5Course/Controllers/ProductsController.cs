@@ -28,6 +28,7 @@ namespace MVC5Course.Controllers
         {
             var db = repo.GetProduct所有資料(Active);
             //return View(db.Product.Where(p => p.Active.Value == Active).OrderByDescending(p => p.ProductId).Take(10));
+            ViewData.Model = db;
 
             return View(db);
         }
@@ -146,11 +147,21 @@ namespace MVC5Course.Controllers
         //    base.Dispose(disposing);
         //}
 
-        public ActionResult ListProducts()
+        public ActionResult ListProducts(ProductListSearchVM searchCondition)
         {
             // var data = db.Product.Where(p => p.Active == true)
-            var data = repo.GetProduct所有資料(true)
-                .Select(p => new ProductListVM()
+            var data = repo.GetProduct所有資料(true);
+
+            if (!String.IsNullOrEmpty(searchCondition.q))
+            {
+                data = data.Where(p => p.ProductName.Contains(searchCondition.q));
+            }
+
+            //if (searchCondition.s != null) { data = data.Where(p => p.Price == searchCondition.s); }
+
+            // data = data.Where(p => p.Stock > Stock_S && p.Stock < Stock_E);
+            data = data.Where(p => p.Stock > searchCondition.Stock_S && p.Stock < searchCondition.Stock_E);
+            var data2 = data.Select(p => new ProductListVM()
                 {
                     ProductId = p.ProductId,
                     ProductName = p.ProductName,
@@ -158,7 +169,7 @@ namespace MVC5Course.Controllers
                     Stock = p.Stock
                 }).Take(10);
 
-            return View(data);
+            return View(data2);
         }
 
         public ActionResult CreateProducts()
@@ -172,6 +183,7 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
+                TempData["CreateProducts_result"] = "商品新增成功!!";
                 return RedirectToAction("ListProducts");
             }
 
