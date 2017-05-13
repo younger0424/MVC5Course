@@ -47,10 +47,11 @@ namespace MVC5Course.Controllers
         [HttpPost]
         public ActionResult Edit(int id, Product product)
         {
+            var item = db.Product.Find(id);
 
             if (ModelState.IsValid)
             {
-                var item = db.Product.Find(id);
+       
                 item.ProductName = product.ProductName;
                 item.Price = product.Price;
                 item.Active = product.Active;
@@ -61,7 +62,7 @@ namespace MVC5Course.Controllers
                 return RedirectToAction("Index");
             }else
             {
-                return View(product);
+                return View(item);
             }
         }
 

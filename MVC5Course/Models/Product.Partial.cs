@@ -7,13 +7,27 @@ namespace MVC5Course.Models
     using ValidationAttributes;
 
     [MetadataType(typeof(ProductMetaData))]
-    public partial class Product
+    public partial class Product : IValidatableObject
     {
+
         public int 訂單數量
         {
             get {
                    return this.OrderLine.Count;
                 }
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+
+            if (this.Price > 100 && this.Stock < 1) {
+
+                     yield return new ValidationResult("庫存不足", new string[] {"Stock" }) ;
+                }
+
+            yield break;
+            //throw new NotImplementedException();
+
         }
     }
     
@@ -32,7 +46,7 @@ namespace MVC5Course.Models
         [Required]
         [StringLength(80, ErrorMessage="欄位長度不得大於 80 個字元")]
         [DisplayName("商品名稱")]
-        [商品名稱必須包含Will字串(ErrorMessage = "商品名稱必須包含Will字串")]
+        //[商品名稱必須包含Will字串(ErrorMessage = "商品名稱必須包含Will字串")]
         public string ProductName { get; set; }
         [Required]
         [DisplayFormat(DataFormatString ="{0:0}",ApplyFormatInEditMode = true)]
