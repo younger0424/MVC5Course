@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
@@ -20,6 +20,25 @@ namespace MVC5Course.Controllers
             return View();
         }
 
+        public ActionResult PartialAbout()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("About");
+            }
+            else
+            {
+                return View("About");
+            }
+        }
+
+        public ActionResult SuccessRedirect()
+        {
+            return PartialView("SuccessRedirect" , "/");
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -30,6 +49,21 @@ namespace MVC5Course.Controllers
         {
             return View();
         }
-    }
+
+        public ActionResult GetFile()
+        {
+            return File(Server.MapPath("~/Content/Pokemon Go.png"), "image/png", "NewName.png");
+
+        }
+
+        public ActionResult GetJson()
+        {
+            //用來指定是否要啟用延遲加載,延時加載子對象不自動加載 false
+            db.Configuration.LazyLoadingEnabled = false;
+            return Json(db.Product.Take(5) , JsonRequestBehavior.AllowGet);
+        }
+
+
+        }
 
 }
