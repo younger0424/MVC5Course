@@ -13,9 +13,11 @@ namespace MVC5Course.Controllers
             return View();
         }
 
+        [LocalOnly]
+        [ShareViewBag]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            //ViewBag.Message = "Your application description page."; 此段已在 [ShareViewBag]中執行,故可省略
 
             return View();
         }

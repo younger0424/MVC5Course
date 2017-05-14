@@ -94,13 +94,12 @@ namespace MVC5Course.Controllers
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] //<==actionfilter
         //public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         public ActionResult Edit(int id , FormCollection form)
         {
             var product = repo.Get單筆資料ByProductId(id);
-            if (TryUpdateModel(product,
-                new string[] { "ProductId", "ProductName", "Price", "Active", "Stock" }))
+            if (TryUpdateModel(product, new string[] { "ProductId", "ProductName", "Price", "Active", "Stock" }))
             {
                 repo.Update(product);
                 repo.UnitOfWork.Commit();
