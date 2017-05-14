@@ -95,17 +95,27 @@ namespace MVC5Course.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        //public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        public ActionResult Edit(int id , FormCollection form)
         {
-            if (ModelState.IsValid)
+            var product = repo.Get單筆資料ByProductId(id);
+            if (TryUpdateModel(product,
+                new string[] { "ProductId", "ProductName", "Price", "Active", "Stock" }))
             {
-                //db.Entry(product).State = EntityState.Modified;
                 repo.Update(product);
-                //db.SaveChanges();
                 repo.UnitOfWork.Commit();
                 return RedirectToAction("Index");
-            }
-            return View(product);
+             }
+
+                //if (ModelState.IsValid)
+                //{
+                //    //db.Entry(product).State = EntityState.Modified;
+                //    repo.Update(product);
+                //    //db.SaveChanges();
+                //    repo.UnitOfWork.Commit();
+                //    return RedirectToAction("Index");
+                //}
+                return View(product);
         }
 
         // GET: Products/Delete/5
@@ -172,18 +182,18 @@ namespace MVC5Course.Controllers
             return View(data2);
         }
 
-        public ActionResult CreateProducts()
+        public ActionResult CreateProduct()
         {
          
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreateProducts(ProductListVM data)
+        public ActionResult CreateProduct(ProductListVM data)
         {
             if (ModelState.IsValid)
             {
-                TempData["CreateProducts_result"] = "商品新增成功!!";
+                TempData["CreateProduct_Result"] = "商品新增成功!!";
                 return RedirectToAction("ListProducts");
             }
 
