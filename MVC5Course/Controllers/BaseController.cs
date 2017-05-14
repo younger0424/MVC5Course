@@ -16,6 +16,12 @@ namespace MVC5Course.Controllers
     {
         protected FabricsEntities db = new FabricsEntities();
 
+        [LocalOnly]
+        public ActionResult Debug()
+        {
+            return Content("Hello");
+        }
+
         //若網址無法對應，則回到首頁
         //protected override void HandleUnknownAction(string actionName)
         //{

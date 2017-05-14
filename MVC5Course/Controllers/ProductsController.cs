@@ -23,7 +23,7 @@ namespace MVC5Course.Controllers
         //    //return View(db.Product.OrderByDescending(p => p.ProductId).Take(10));
         //    return View(db);
         //}
-
+        [OutputCache(Duration = 5, Location = System.Web.UI.OutputCacheLocation.ServerAndClient)]
         public ActionResult Index(bool? Active = true)
         {
             var db = repo.GetProduct所有資料(Active);
@@ -60,6 +60,7 @@ namespace MVC5Course.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError(ExceptionType = typeof(System.Data.Entity.Infrastructure.DbUpdateException), View = "Error_DbUpdateException")]
         public ActionResult Create(Product product)
         {
             if (ModelState.IsValid)
