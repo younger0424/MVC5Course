@@ -65,7 +65,18 @@ namespace MVC5Course.Controllers
             return Json(db.Product.Take(5) , JsonRequestBehavior.AllowGet);
         }
 
-
+   
+        public ActionResult VT()
+        {
+            return View("VT");
         }
+
+        public ActionResult RazotTest()
+        {
+            int[] data = new int[] { 1,2,3,4,5 };
+            return PartialView(data);
+        }
+
+    }
 
 }

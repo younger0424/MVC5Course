@@ -61,16 +61,17 @@ namespace MVC5Course.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleError(ExceptionType = typeof(System.Data.Entity.Infrastructure.DbUpdateException), View = "Error_DbUpdateException")]
-        public ActionResult Create(Product product)
+        // public ActionResult Create(Product product)
+        public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+           // {
                 //db.Product.Add(product);
                 repo.Add(product);
                 //db.SaveChanges();
                 repo.UnitOfWork.Commit();
                 return RedirectToAction("Index");
-            }
+            //}
 
             return View(product);
         }
