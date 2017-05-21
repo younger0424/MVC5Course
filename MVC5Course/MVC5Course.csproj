@@ -189,6 +189,7 @@
     <Compile Include="Controllers\Clients1Controller.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\EFController.cs" />
+    <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocalOnlyAttribute.cs" />
@@ -297,19 +298,19 @@
     <Content Include="App_Data\Fabrics_log.ldf" />
     <Content Include="calendar.html" />
     <Content Include="chart.html" />
-    <Content Include="App_Start\Content\18275274_1181371042009582_7156939392380477631_n.jpg" />
-    <Content Include="App_Start\Content\bootstrap-theme.css" />
-    <Content Include="App_Start\Content\bootstrap-theme.min.css" />
-    <Content Include="App_Start\Content\bootstrap.css" />
-    <Content Include="App_Start\Content\bootstrap.min.css" />
-    <Content Include="App_Start\Content\Pokemon Go.png" />
+    <Content Include="Content\18275274_1181371042009582_7156939392380477631_n.jpg" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Pokemon Go.png" />
     <Content Include="favicon.ico" />
     <Content Include="file-manager.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="form.html" />
     <Content Include="gallery.html" />
     <Content Include="Global.asax" />
-    <Content Include="App_Start\Content\Site.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="icon.html" />
     <Content Include="index.html" />
     <Content Include="login.html" />
@@ -338,10 +339,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="App_Start\Content\bootstrap.min.css.map" />
-    <Content Include="App_Start\Content\bootstrap.css.map" />
-    <Content Include="App_Start\Content\bootstrap-theme.min.css.map" />
-    <Content Include="App_Start\Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="widgets.html" />
     <EntityDeploy Include="Models\Fabrics.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -446,6 +447,8 @@
     <Content Include="Views\Orders1\Details.cshtml" />
     <Content Include="Views\Orders1\Edit.cshtml" />
     <Content Include="Views\Orders1\Index.cshtml" />
+    <Content Include="Views\Form\Index.cshtml" />
+    <Content Include="Views\Form\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

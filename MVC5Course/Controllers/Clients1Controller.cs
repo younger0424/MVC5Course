@@ -15,9 +15,35 @@ namespace MVC5Course.Controllers
         private FabricsEntities db = new FabricsEntities();
 
         // GET: Clients1
-        public ActionResult Index()
+        public ActionResult Index(int CreditRatingFilter = -1 , string LastNameFilter = "")
         {
-            var client = db.Client.Take(10);
+            var ratings = (from p in db.Client
+                           select p.CreditRating)
+                           .Distinct()
+                           .OrderBy(p => p).ToList();
+
+            ViewBag.CreditRatingFilter = new SelectList(ratings);
+
+            var lastNames = (from p in db.Client
+                             select p.LastName)
+                           .Distinct()
+                           .OrderBy(p => p).ToList();
+
+            var client = db.Client.AsQueryable();
+
+            ViewBag.LastNameFilter = new SelectList(lastNames);
+
+            if(CreditRatingFilter >= 0)
+            {
+                client = client.Where(p => p.CreditRating == CreditRatingFilter);
+            }
+
+            if (!string.IsNullOrEmpty(LastNameFilter))
+            {
+                client = client.Where(p => p.LastName == LastNameFilter);
+            }
+
+            //var client = db.Client.Take(10);
             return View(client.ToList());
         }
 
@@ -64,6 +90,9 @@ namespace MVC5Course.Controllers
         // GET: Clients1/Edit/5
         public ActionResult Edit(int? id)
         {
+
+            ViewBag.CreditRating = new SelectList(new int[] {0,1,2,3,4,5,6,7,8,9});
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
