@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
+using PagedList.Mvc;
+using PagedList;
 
 namespace MVC5Course.Controllers
 {
@@ -15,7 +17,7 @@ namespace MVC5Course.Controllers
         private FabricsEntities db = new FabricsEntities();
 
         // GET: Clients1
-        public ActionResult Index(int CreditRatingFilter = -1 , string LastNameFilter = "")
+        public ActionResult Index(int CreditRatingFilter = -1 , string LastNameFilter = "", int pageNo = 1)
         {
             var ratings = (from p in db.Client
                            select p.CreditRating)
@@ -44,7 +46,8 @@ namespace MVC5Course.Controllers
             }
 
             //var client = db.Client.Take(10);
-            return View(client.ToList());
+            ViewData.Model = client.OrderByDescending(p => p.ClientId).ToPagedList(pageNo, 10);
+            return View();
         }
 
         // GET: Clients1/Details/5
@@ -91,7 +94,7 @@ namespace MVC5Course.Controllers
         public ActionResult Edit(int? id)
         {
 
-            ViewBag.CreditRating = new SelectList(new int[] {0,1,2,3,4,5,6,7,8,9});
+            ViewBag.CreditRating = new SelectList(new double[] {0,1,2,3,4,5,6,7,8,9});
 
             if (id == null)
             {
